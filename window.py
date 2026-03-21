@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
 from const import WidgetName, RAW_CONFIG
+from main import logger
 from widgets.base import PrichetaWidget
 from widgets.button_menu import ButtonMenu
 
@@ -53,3 +54,23 @@ class Window(QWidget):
     def closeEvent(self, event):
         self.hide()
         event.ignore()
+
+
+class WindowManager:
+    def __init__(self, window_configs: dict[str, WindowConfig]):
+        self.window_configs = window_configs
+        self.active_window = None
+
+
+    def build_and_show(self, window_name: str, ):
+        config = self.window_configs.get(window_name)
+
+        if not config:
+            logger.error(f"Window {window_name} not found")
+            return
+
+        if self.active_window:
+            self.active_window.destroy()
+
+        self.active_window = Window(config)
+        self.active_window.show()

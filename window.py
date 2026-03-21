@@ -1,7 +1,7 @@
 from typing import Type
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QColor, QPalette, QPaintEvent, QPainter
+from PyQt6.QtGui import QColor, QPaintEvent, QPainter
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 

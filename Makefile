@@ -6,6 +6,7 @@ lint:
 	mypy $(CODE)
 
 format:
+	ruff check --select F401 --fix $(CODE)
 	black $(CODE)
 
 check: format lint

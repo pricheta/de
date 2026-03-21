@@ -28,7 +28,7 @@ window_config = {
     "Y": 10,
     "WIDTH": 100,
     "HEIGHT": 100,
-    "WIDGETS": [widget_config, widget_config],
+    "WIDGETS": [widget_config],
 }
 
 

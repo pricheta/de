@@ -42,7 +42,6 @@ class AppConfig(BaseModel):
 if __name__ == "__main__":
     config = AppConfig.model_validate(app_config)
     windows_configs = {window_config.TITLE: window_config for window_config in config.WINDOWS}
-
     window_manager = WindowManager(windows_configs)
 
     app = QApplication([])

@@ -1,5 +1,5 @@
 import sys
-
+from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
 
@@ -9,6 +9,10 @@ class SimpleApp(QWidget):
 
         self.setWindowTitle("PyQt6 Simple App")
         self.setGeometry(100, 100, 300, 200)
+
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setWindowOpacity(0.5)
+
 
         self.label = QLabel("Hello, PyQt6!", self)
         self.button = QPushButton("Click Me", self)
@@ -20,7 +24,6 @@ class SimpleApp(QWidget):
         self.button.clicked.connect(self.on_button_click)
 
         self.setLayout(layout)
-        self.setWindowOpacity(0.3)
 
     def on_button_click(self):
         self.label.setText("Button clicked!")

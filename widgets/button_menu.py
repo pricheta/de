@@ -7,7 +7,6 @@ from pydantic import BaseModel
 
 from common import RAW_CONFIG
 from widgets.base import PrichetaWidget
-from window import Window
 
 
 class ButtonConfig(BaseModel):
@@ -32,7 +31,11 @@ class ButtonMenu(PrichetaWidget):
 
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:
+        from window import Window
+
+
         def button_click_func() -> None:
+
             subprocess.Popen(
                 command,
                 shell=True,
@@ -47,9 +50,13 @@ class ButtonMenu(PrichetaWidget):
                 window.destroy()
 
         def __get_window(obj: QObject) -> Window:
-            while not isinstance(obj, Window):
-                obj = obj.parent()
+            current: QObject | None = obj
 
-            return obj
+            while current is not None:
+                if isinstance(current, Window):
+                    return current
+                current = current.parent()
+
+            raise RuntimeError("Window not found in parents hierarchy")
 
         return button_click_func

@@ -8,7 +8,7 @@ from window import WindowConfig, WindowManager
 widget_config = {
     "NAME": "Button Menu",
     "CONFIG": {
-        "DESTROY_WINDOW_AFTER_CLICK": True,
+        "HIDE_WINDOW_AFTER_CLICK": True,
         "BUTTONS": [
             {
                 "LABEL": "test",

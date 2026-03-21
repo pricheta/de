@@ -1,6 +1,5 @@
 from typing import Type
 
-from PyQt6.QtCore import QObject
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 

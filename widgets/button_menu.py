@@ -1,11 +1,13 @@
 import subprocess
 from typing import Callable
 
+from PyQt6.QtCore import QObject
 from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
 from common import RAW_CONFIG
 from widgets.base import PrichetaWidget
+from window import Window
 
 
 class ButtonConfig(BaseModel):
@@ -41,7 +43,13 @@ class ButtonMenu(PrichetaWidget):
             )
 
             if self.config.HIDE_WINDOW_AFTER_CLICK:
-                window = self.parent().parent()
+                window = __get_window(self)
                 window.destroy()
+
+        def __get_window(obj: QObject) -> Window:
+            while not isinstance(obj, Window):
+                obj = obj.parent()
+
+            return obj
 
         return button_click_func

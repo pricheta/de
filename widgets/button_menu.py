@@ -1,10 +1,10 @@
 import subprocess
 from typing import Callable
 
-from PyQt6.QtWidgets import QVBoxLayout, QPushButton
+from PyQt6.QtWidgets import QVBoxLayout, QPushButton, QHBoxLayout
 from pydantic import BaseModel
 
-from widgets._base import WidgetConfig
+from widgets._base import WidgetConfig, Widget
 from window import Window
 
 
@@ -17,11 +17,13 @@ class ButtonMenuConfig(WidgetConfig):
     BUTTONS: list[ButtonConfig]
 
 
-class ButtonMenu(QVBoxLayout):
+class ButtonMenu(Widget):
+    CONFIG_CLASS: ButtonConfig
+
+
     def __init__(self, window: Window, config: ButtonMenuConfig) -> None:
-        super().__init__()
+        super().__init__(window, config)
         self.window = window
-        self.config = config
 
         for button_config in self.config.BUTTONS:
             button = QPushButton(button_config.label)
@@ -39,6 +41,6 @@ class ButtonMenu(QVBoxLayout):
                 stderr=subprocess.DEVNULL,
                 stdin=subprocess.DEVNULL
             )
-            self.window.destroy()
+            self.window.hide()
 
         return button_click

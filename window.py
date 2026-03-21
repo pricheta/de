@@ -1,9 +1,7 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
-from main import FIFO_PATH
-from fifo_reader import FifoReader
-from widgets._base import WidgetConfig
+from widgets._base import WidgetConfig, WIDGET_NAME_TO_TYPE_MAP
 
 
 class WindowConfig(BaseModel):
@@ -28,29 +26,17 @@ class Window(QWidget):
             self.config.HEIGHT
         )
 
-        self.label = QLabel("Hello, PyQt6!", self)
-        self.button = QPushButton("Click Me", self)
+        self.__build_widgets()
 
-        layout = QVBoxLayout()
-        layout.addWidget(self.label)
-        layout.addWidget(self.button)
+    def __build_widgets(self) -> None:
+        self.main_layout = QHBoxLayout()
 
-        self.button.clicked.connect(self.on_button_click)
+        for raw_config in self.config.WIDGETS:
+            widget_class = WIDGET_NAME_TO_TYPE_MAP[raw_config.name]
 
-        self.setLayout(layout)
+            config = None
+            if widget_class.CONFIG_CLASS:
+                config = widget_class.CONFIG_CLASS.model_validate(raw_config.config)
 
-        self.fifo_thread = FifoReader(FIFO_PATH)
-        self.fifo_thread.SIGNAL_EMITTER.connect(self.on_message_received)
-        self.fifo_thread.start()
-
-
-    def on_button_click(self):
-        self.label.setText("Button clicked!")
-
-
-    def on_message_received(self, message: str):
-        print(f"Received command: {message}")
-        if message == "change_text":
-            self.label.setText("Text changed via FIFO!")
-        elif message == "hide":
-            self.hide()
+            widget = widget_class(self, config)
+            self.main_layout.addLayout(widget)

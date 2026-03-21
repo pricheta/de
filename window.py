@@ -1,9 +1,10 @@
 from typing import Type
 
+from PyQt6.QtCore import QObject
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
-from const import WidgetName, RAW_CONFIG, logger
+from common import WidgetName, RAW_CONFIG, logger
 from widgets.base import PrichetaWidget
 from widgets.button_menu import ButtonMenu
 
@@ -43,12 +44,13 @@ class Window(QWidget):
         self.__build_widgets()
 
     def __build_widgets(self) -> None:
-        self.main_layout = QHBoxLayout()
+        main_layout = QHBoxLayout()
+        self.setLayout(main_layout)
 
-        for raw_config in self.config.WIDGETS:
-            widget_type = WIDGET_NAME_TO_TYPE_MAP[raw_config.NAME]
-            widget = widget_type(raw_config.CONFIG)
-            self.main_layout.addLayout(widget)
+        for widget_config in self.config.WIDGETS:
+            widget_type = WIDGET_NAME_TO_TYPE_MAP[widget_config.NAME]
+            widget = widget_type(widget_config.CONFIG)
+            main_layout.addLayout(widget)
 
     def closeEvent(self, event):
         self.hide()

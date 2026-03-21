@@ -3,7 +3,7 @@ import os
 
 from PyQt6.QtCore import QThread, pyqtSignal
 
-from const import logger
+from common import logger
 
 
 class FifoReader(QThread):

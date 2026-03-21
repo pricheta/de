@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from const import WidgetName
+from common import WidgetName
 
 
 

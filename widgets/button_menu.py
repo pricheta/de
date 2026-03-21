@@ -4,7 +4,7 @@ from typing import Callable
 from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
-from const import RAW_CONFIG
+from common import RAW_CONFIG
 from widgets.base import PrichetaWidget
 
 
@@ -15,6 +15,7 @@ class ButtonConfig(BaseModel):
 
 class ButtonMenuConfig(BaseModel):
     BUTTONS: list[ButtonConfig]
+    HIDE_WINDOW_AFTER_CLICK: bool
 
 
 class ButtonMenu(PrichetaWidget):
@@ -28,8 +29,7 @@ class ButtonMenu(PrichetaWidget):
             self.addWidget(button)
 
 
-    @staticmethod
-    def __get_button_click_func(command: str) -> Callable[[], None]:
+    def __get_button_click_func(self, command: str) -> Callable[[], None]:
         def button_click_func() -> None:
             subprocess.Popen(
                 command,
@@ -39,5 +39,9 @@ class ButtonMenu(PrichetaWidget):
                 stderr=subprocess.DEVNULL,
                 stdin=subprocess.DEVNULL
             )
+
+            if self.config.HIDE_WINDOW_AFTER_CLICK:
+                window = self.parent().parent()
+                window.destroy()
 
         return button_click_func

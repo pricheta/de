@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QHBoxLayout
 
-from const import RAW_CONFIG
+from common import RAW_CONFIG
 
 
 class PrichetaWidget(QHBoxLayout):

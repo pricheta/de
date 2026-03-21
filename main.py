@@ -1,8 +1,11 @@
 import sys
 import os
-import time
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from enum import StrEnum
+from typing import Any
+
+from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
+from pydantic import BaseModel
 
 FIFO_PATH = "/tmp/my_fifo"  # You can choose any path that works for you
 
@@ -22,12 +25,37 @@ class FifoReaderThread(QThread):
                     self.message_received.emit(message)
 
 
-class DE(QWidget):
-    def __init__(self):
-        super().__init__()
+class WidgetName(StrEnum):
+    BUTTON_MENU = "Button Menu"
 
-        self.setWindowTitle("PyQt6 Simple App")
-        self.setGeometry(100, 100, 300, 200)
+
+class WidgetConfig(BaseModel):
+    name: WidgetName
+
+
+class WindowConfig(BaseModel):
+    TITLE: str
+    X: int
+    Y: int
+    WIDTH: int
+    HEIGHT: int
+    WIDGETS: list[WidgetConfig]
+
+
+
+
+class Window(QWidget):
+    def __init__(self, config: WindowConfig):
+        super().__init__()
+        self.config = config
+
+        self.setWindowTitle(self.config.TITLE)
+        self.setGeometry(
+            self.config.X,
+            self.config.Y,
+            self.config.WIDTH,
+            self.config.HEIGHT
+        )
 
         self.label = QLabel("Hello, PyQt6!", self)
         self.button = QPushButton("Click Me", self)
@@ -65,7 +93,7 @@ if __name__ == "__main__":
     os.mkfifo(FIFO_PATH)
 
     app = QApplication(sys.argv)
-    window = DE()
+    window = Window()
     window.show()
 
     # Run the app

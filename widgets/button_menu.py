@@ -1,7 +1,7 @@
 import subprocess
 from typing import Callable
 
-from PyQt6.QtCore import QObject
+from PyQt6.QtCore import QObject, Qt
 from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
@@ -27,6 +27,7 @@ class ButtonMenu(PrichetaWidget):
         for button_config in self.config.BUTTONS:
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
+            button.setCursor(Qt.CursorShape.PointingHandCursor)
             self.addWidget(button)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:

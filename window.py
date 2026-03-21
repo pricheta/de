@@ -1,5 +1,6 @@
 from typing import Type
 
+from PyQt6.QtCore import QFile, QTextStream, Qt
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
@@ -37,6 +38,8 @@ class Window(QWidget):
         )
 
         self.__build_widgets()
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.__apply_stylesheet("/home/pricheta/Programs/pricheta/de/style.css")
 
     def __build_widgets(self) -> None:
         main_layout = QHBoxLayout()
@@ -50,6 +53,23 @@ class Window(QWidget):
     def closeEvent(self, event):
         self.hide()
         event.ignore()
+
+    def __apply_stylesheet(self, file_name: str) -> None:
+        file = QFile(file_name)
+        if not file.exists():
+            logger.error(f"Style sheet file '{file_name}' does not exist!")
+            return
+
+        if not file.open(QFile.OpenModeFlag.ReadOnly):
+            logger.error(f"Cannot open style sheet file '{file_name}'")
+            return
+
+        try:
+            stream = QTextStream(file)
+            stylesheet = stream.readAll()
+            self.setStyleSheet(stylesheet)
+        finally:
+            file.close()
 
 
 class WindowManager:

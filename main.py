@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
 
@@ -13,7 +14,6 @@ class SimpleApp(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setWindowOpacity(0.5)
 
-
         self.label = QLabel("Hello, PyQt6!", self)
         self.button = QPushButton("Click Me", self)
 
@@ -25,9 +25,18 @@ class SimpleApp(QWidget):
 
         self.setLayout(layout)
 
+
     def on_button_click(self):
         self.label.setText("Button clicked!")
-        self.hide()
+
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        color = QColor(0, 0, 0, 128)
+        painter.setBrush(color)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawRect(self.rect())
+        super().paintEvent(event)
 
 
 app = QApplication(sys.argv)

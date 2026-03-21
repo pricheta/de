@@ -1,5 +1,7 @@
 from typing import Type
 
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QColor, QPalette, QPaintEvent, QPainter
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
@@ -37,6 +39,7 @@ class Window(QWidget):
         )
 
         self.__build_widgets()
+        self.__set_background_opacity()
 
     def __build_widgets(self) -> None:
         main_layout = QHBoxLayout()
@@ -47,9 +50,21 @@ class Window(QWidget):
             widget = widget_type(widget_config.CONFIG)
             main_layout.addLayout(widget)
 
+    def __set_background_opacity(self) -> None:
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
+
     def closeEvent(self, event):
         self.hide()
         event.ignore()
+
+    def paintEvent(self, event: QPaintEvent | None) -> None:
+        if not event:
+            return
+
+        painter = QPainter(self)
+        bg_color = QColor(0, 0, 0, 128)
+        painter.fillRect(self.rect(), bg_color)
 
 
 class WindowManager:

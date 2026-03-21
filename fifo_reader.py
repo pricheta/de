@@ -16,10 +16,9 @@ class FifoReader(QThread):
     SIGNAL_EMITTER = pyqtSignal(str)
 
 
-    def __init__(self, config: FifoReaderConfig, windows: dict[str, Window]):
+    def __init__(self, config: FifoReaderConfig):
         super().__init__()
         self.config = config
-        self.windows = windows
 
 
     def run(self):

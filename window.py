@@ -49,3 +49,7 @@ class Window(QWidget):
             widget_type = WIDGET_NAME_TO_TYPE_MAP[raw_config.NAME]
             widget = widget_type(raw_config.CONFIG)
             self.main_layout.addLayout(widget)
+
+    def closeEvent(self, event):
+        self.hide()
+        event.ignore()

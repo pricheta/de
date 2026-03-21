@@ -36,29 +36,37 @@ window_config = {
 
 app_config = {"WINDOWS": [window_config]}
 
+class WindowManager:
+    def __init__(self, window_configs: dict[str, WindowConfig]):
+        self.window_configs = window_configs
+        self.active_window = None
 
-def show_window(window_name: str, windows: dict[str, Window]):
-    window = windows.get(window_name)
+    def build_and_show(self, window_name: str, ):
+        config = self.window_configs.get(window_name)
 
-    if not window:
-        logger.error(f"Window {window_name} not found")
-        return
+        if not config:
+            logger.error(f"Window {window_name} not found")
+            return
 
-    window.show()
+        if self.active_window:
+            self.active_window.destroy()
+
+        self.active_window = Window(config)
+        self.active_window.show()
 
 
 if __name__ == "__main__":
     config = AppConfig.model_validate(app_config)
-    windows = {}
+    windows_configs = {window_config.TITLE: window_config for window_config in config.WINDOWS}
+
+    window_manager = WindowManager(windows_configs)
 
     app = QApplication([])
-    for window_config in config.WINDOWS:
-        window = Window(window_config)
-        windows[window_config.TITLE] = window
+    app.setQuitOnLastWindowClosed(False)
 
     fifo_reader_config = FifoReaderConfig(FIFO_PATH='/tmp/my_fifo')
-    fifo_reader = FifoReader(fifo_reader_config, windows)
-    fifo_reader.SIGNAL_EMITTER.connect(lambda window_name: show_window(window_name, windows))
+    fifo_reader = FifoReader(fifo_reader_config)
+    fifo_reader.SIGNAL_EMITTER.connect(window_manager.build_and_show)
     fifo_reader.start()
 
     app.exec()

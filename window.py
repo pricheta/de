@@ -1,7 +1,8 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QPushButton, QVBoxLayout
 from pydantic import BaseModel
 
-from main import FifoReader, FIFO_PATH
+from main import FIFO_PATH
+from fifo_reader import FifoReader
 from widgets._base import WidgetConfig
 
 

@@ -1,42 +1,32 @@
-import sys
-import os
+import logging
 
-from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtWidgets import QApplication
-from pydantic import BaseModel
 
+from fifo_reader import FifoReaderConfig, FifoReader
 from window import Window
 
 
-class FifoReaderConfig(BaseModel):
-    FIFO_PATH = "/tmp/my_fifo"
+logger = logging.getLogger(__name__)
 
 
+def show_window(window_name: str, windows: dict[str, Window]):
+    window = windows.get(window_name)
 
-class FifoReader(QThread):
-    SIGNAL_EMITTER = pyqtSignal(str)
+    if not window:
+        logger.error(f"Window {window_name} not found")
+        return
 
-    def __init__(self, config: FifoReaderConfig):
-        super().__init__()
-        self.config = config
-
-    def run(self):
-        if os.path.exists(self.config.FIFO_PATH):
-            os.remove(self.config.FIFO_PATH)
-
-        os.mkfifo(self.config.FIFO_PATH)
-
-        while True:
-            with open(self.config.FIFO_PATH, "r") as fifo:
-                message = fifo.readline().strip()
-                if message:
-                    self.SIGNAL_EMITTER.emit(message)
+    window.show()
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Window()
-    window.show()
+    app = QApplication([])
+    windows = {}
 
-    # Run the app
-    sys.exit(app.exec())
+    fifo_reader_config = FifoReaderConfig(FIFO_PATH='/tmp/my_fifo')
+    fifo_reader = FifoReader(fifo_reader_config, windows)
+    fifo_reader.SIGNAL_EMITTER.connect(lambda window_name: show_window(window_name, windows))
+
+    fifo_reader.start()
+    app.exec()
+

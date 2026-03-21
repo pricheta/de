@@ -29,10 +29,8 @@ class ButtonMenu(PrichetaWidget):
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             self.addWidget(button)
 
-
     def __get_button_click_func(self, command: str) -> Callable[[], None]:
         from window import Window
-
 
         def button_click_func() -> None:
 
@@ -42,7 +40,7 @@ class ButtonMenu(PrichetaWidget):
                 start_new_session=True,
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
-                stdin=subprocess.DEVNULL
+                stdin=subprocess.DEVNULL,
             )
 
             if self.config.HIDE_WINDOW_AFTER_CLICK:

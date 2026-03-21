@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from fifo_reader import FifoReader
 from window import WindowConfig, WindowManager
 
-
 widget_config = {
     "NAME": "Button Menu",
     "CONFIG": {
@@ -20,7 +19,7 @@ widget_config = {
 
 
 window_config = {
-    "TITLE": 'test',
+    "TITLE": "test",
     "X": 10,
     "Y": 10,
     "WIDTH": 100,
@@ -29,10 +28,7 @@ window_config = {
 }
 
 
-app_config = {
-    "FIFO_PATH": "/tmp/my_fifo",
-    "WINDOWS": [window_config]
-}
+app_config = {"FIFO_PATH": "/tmp/my_fifo", "WINDOWS": [window_config]}
 
 
 class AppConfig(BaseModel):
@@ -42,7 +38,9 @@ class AppConfig(BaseModel):
 
 if __name__ == "__main__":
     config = AppConfig.model_validate(app_config)
-    windows_configs = {window_config.TITLE: window_config for window_config in config.WINDOWS}
+    windows_configs = {
+        window_config.TITLE: window_config for window_config in config.WINDOWS
+    }
     window_manager = WindowManager(windows_configs)
 
     app = QApplication([])

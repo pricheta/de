@@ -3,8 +3,7 @@ from typing import Type
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
-from const import WidgetName, RAW_CONFIG
-from main import logger
+from const import WidgetName, RAW_CONFIG, logger
 from widgets.base import PrichetaWidget
 from widgets.button_menu import ButtonMenu
 

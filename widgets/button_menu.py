@@ -1,38 +1,36 @@
 import subprocess
 from typing import Callable
 
-from PyQt6.QtWidgets import QVBoxLayout, QPushButton, QHBoxLayout
+from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
-from widgets._base import WidgetConfig, Widget
-from window import Window
+from configs import RAW_CONFIG
+from widgets._base import PrichetaWidget
 
 
 class ButtonConfig(BaseModel):
-    label: str
-    command: str
+    LABEL: str
+    COMMAND: str
 
 
-class ButtonMenuConfig(WidgetConfig):
+class ButtonMenuConfig(BaseModel):
     BUTTONS: list[ButtonConfig]
 
 
-class ButtonMenu(Widget):
-    CONFIG_CLASS: ButtonConfig
-
-
-    def __init__(self, window: Window, config: ButtonMenuConfig) -> None:
-        super().__init__(window, config)
-        self.window = window
+class ButtonMenu(PrichetaWidget):
+    def __init__(self, config: RAW_CONFIG) -> None:
+        super().__init__()
+        self.config = ButtonMenuConfig.model_validate(config)
 
         for button_config in self.config.BUTTONS:
-            button = QPushButton(button_config.label)
-            button.clicked.connect(self.__get_button_click_func(button_config.command))
+            button = QPushButton(button_config.LABEL)
+            button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             self.addWidget(button)
 
 
-    def __get_button_click_func(self, command: str) -> Callable[[], None]:
-        def button_click() -> None:
+    @staticmethod
+    def __get_button_click_func(command: str) -> Callable[[], None]:
+        def button_click_func() -> None:
             subprocess.Popen(
                 command,
                 shell=True,
@@ -41,6 +39,5 @@ class ButtonMenu(Widget):
                 stderr=subprocess.DEVNULL,
                 stdin=subprocess.DEVNULL
             )
-            self.window.hide()
 
-        return button_click
+        return button_click_func

@@ -1,17 +1,8 @@
-import logging
-
 from PyQt6.QtWidgets import QApplication
 from pydantic import BaseModel
 
 from fifo_reader import FifoReader
 from window import WindowConfig, WindowManager
-
-logger = logging.getLogger(__name__)
-
-
-class AppConfig(BaseModel):
-    WINDOWS: list[WindowConfig]
-    FIFO_PATH: str
 
 
 widget_config = {
@@ -41,6 +32,11 @@ app_config = {
     "FIFO_PATH": "/tmp/my_fifo",
     "WINDOWS": [window_config]
 }
+
+
+class AppConfig(BaseModel):
+    WINDOWS: list[WindowConfig]
+    FIFO_PATH: str
 
 
 if __name__ == "__main__":

@@ -20,13 +20,12 @@ def show_window(window_name: str, windows: dict[str, Window]):
 
 
 if __name__ == "__main__":
-    app = QApplication([])
     windows = {}
 
     fifo_reader_config = FifoReaderConfig(FIFO_PATH='/tmp/my_fifo')
     fifo_reader = FifoReader(fifo_reader_config, windows)
     fifo_reader.SIGNAL_EMITTER.connect(lambda window_name: show_window(window_name, windows))
-
     fifo_reader.start()
-    app.exec()
 
+    app = QApplication([])
+    app.exec()

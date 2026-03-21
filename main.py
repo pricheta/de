@@ -1,18 +1,33 @@
 import sys
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPainter, QColor
+import os
+import time
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
+FIFO_PATH = "/tmp/my_fifo"  # You can choose any path that works for you
 
-class SimpleApp(QWidget):
+
+class FifoReaderThread(QThread):
+    message_received = pyqtSignal(str)
+
+    def __init__(self, fifo_path):
+        super().__init__()
+        self.fifo_path = fifo_path
+
+    def run(self):
+        while True:
+            with open(self.fifo_path, "r") as fifo:
+                message = fifo.readline().strip()
+                if message:
+                    self.message_received.emit(message)
+
+
+class DE(QWidget):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("PyQt6 Simple App")
         self.setGeometry(100, 100, 300, 200)
-
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-        self.setWindowOpacity(0.5)
 
         self.label = QLabel("Hello, PyQt6!", self)
         self.button = QPushButton("Click Me", self)
@@ -25,25 +40,33 @@ class SimpleApp(QWidget):
 
         self.setLayout(layout)
 
+        self.fifo_thread = FifoReaderThread(FIFO_PATH)
+        self.fifo_thread.message_received.connect(self.on_message_received)
+        self.fifo_thread.start()
+
 
     def on_button_click(self):
         self.label.setText("Button clicked!")
 
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        color = QColor(0, 0, 0, 128)
-        painter.setBrush(color)
-        painter.setPen(Qt.PenStyle.NoPen)
-        painter.drawRect(self.rect())
-        super().paintEvent(event)
+    def on_message_received(self, message: str):
+        print(f"Received command: {message}")
+        if message == "change_text":
+            self.label.setText("Text changed via FIFO!")
+        elif message == "hide":
+            self.hide()
 
 
-app = QApplication(sys.argv)
 
-# Create and show the main window
-window = SimpleApp()
-window.show()
+if __name__ == "__main__":
+    if os.path.exists(FIFO_PATH):
+        os.remove(FIFO_PATH)
 
-# Run the app
-sys.exit(app.exec())
+    os.mkfifo(FIFO_PATH)
+
+    app = QApplication(sys.argv)
+    window = DE()
+    window.show()
+
+    # Run the app
+    sys.exit(app.exec())

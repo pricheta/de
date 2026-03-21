@@ -13,6 +13,10 @@ widget_config = {
                 "LABEL": "test",
                 "COMMAND": "test_command",
             },
+            {
+                "LABEL": "test2",
+                "COMMAND": "test_command",
+            },
         ],
     },
 }
@@ -24,7 +28,7 @@ window_config = {
     "Y": 10,
     "WIDTH": 100,
     "HEIGHT": 100,
-    "WIDGETS": [widget_config],
+    "WIDGETS": [widget_config, widget_config],
 }
 
 

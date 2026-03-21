@@ -1,3 +1,4 @@
+import logging
 import os
 
 from PyQt6.QtCore import QThread, pyqtSignal
@@ -5,6 +6,7 @@ from pydantic import BaseModel
 
 from window import Window
 
+logger = logging.getLogger(__name__)
 
 class FifoReaderConfig(BaseModel):
     FIFO_PATH: str
@@ -29,4 +31,5 @@ class FifoReader(QThread):
         while True:
             with open(self.config.FIFO_PATH, "r") as fifo:
                 message = fifo.readline().strip()
+                logger.info(f"Message: {message} received")
                 self.SIGNAL_EMITTER.emit(message)

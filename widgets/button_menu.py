@@ -4,8 +4,8 @@ from typing import Callable
 from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
-from configs import RAW_CONFIG
-from widgets._base import PrichetaWidget
+from const import RAW_CONFIG
+from widgets.base import PrichetaWidget
 
 
 class ButtonConfig(BaseModel):

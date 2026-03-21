@@ -1,7 +1,21 @@
+from typing import Type
+
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
-from widgets._base import WidgetConfig, WIDGET_NAME_TO_TYPE_MAP
+from const import WidgetName, RAW_CONFIG
+from widgets.base import PrichetaWidget
+from widgets.button_menu import ButtonMenu
+
+
+WIDGET_NAME_TO_TYPE_MAP: dict[str, Type[PrichetaWidget]] = {
+    "Button Menu": ButtonMenu,
+}
+
+
+class WidgetConfig(BaseModel):
+    NAME: WidgetName
+    CONFIG: RAW_CONFIG | None = None
 
 
 class WindowConfig(BaseModel):
@@ -32,11 +46,6 @@ class Window(QWidget):
         self.main_layout = QHBoxLayout()
 
         for raw_config in self.config.WIDGETS:
-            widget_class = WIDGET_NAME_TO_TYPE_MAP[raw_config.name]
-
-            config = None
-            if widget_class.CONFIG_CLASS:
-                config = widget_class.CONFIG_CLASS.model_validate(raw_config.config)
-
-            widget = widget_class(self, config)
+            widget_type = WIDGET_NAME_TO_TYPE_MAP[raw_config.NAME]
+            widget = widget_type(raw_config.CONFIG)
             self.main_layout.addLayout(widget)

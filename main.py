@@ -10,12 +10,12 @@ widget_config = {
         "HIDE_WINDOW_AFTER_CLICK": True,
         "BUTTONS": [
             {
-                "LABEL": "test",
-                "COMMAND": "test_command",
+                "LABEL": "",
+                "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm",
             },
             {
-                "LABEL": "test2",
-                "COMMAND": "test_command",
+                "LABEL": "",
+                "COMMAND": "/usr/bin/firefox",
             },
         ],
     },

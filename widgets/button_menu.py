@@ -23,11 +23,13 @@ class ButtonMenu(PrichetaWidget):
     def __init__(self, config: RAW_CONFIG) -> None:
         super().__init__()
         self.config = ButtonMenuConfig.model_validate(config)
+        self.setSpacing(20)
 
         for button_config in self.config.BUTTONS:
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             button.setCursor(Qt.CursorShape.PointingHandCursor)
+            button.setFixedSize(128, 128)
             self.addWidget(button)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:

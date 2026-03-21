@@ -58,8 +58,7 @@ class Window(QWidget):
 class WindowManager:
     def __init__(self, window_configs: dict[str, WindowConfig]):
         self.window_configs = window_configs
-        self.active_window = None
-
+        self.active_window: Window | None = None
 
     def build_and_show(self, window_name: str, ):
         config = self.window_configs.get(window_name)

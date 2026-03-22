@@ -1,5 +1,5 @@
 import subprocess
-from math import sqrt, floor, ceil
+from math import sqrt, ceil
 from typing import Callable
 
 from PyQt6.QtCore import QObject, Qt

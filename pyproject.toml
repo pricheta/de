@@ -5,6 +5,10 @@ description = "DE by pricheta"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "black>=26.3.1",
+    "make>=0.1.6.post2",
+    "mypy>=1.19.1",
     "pydantic>=2.12.5",
     "pyqt6>=6.10.2",
+    "ruff>=0.15.7",
 ]

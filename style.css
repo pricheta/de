@@ -1,7 +1,7 @@
 * {
     background-color: transparent;
     padding: 0;
-    font-family: "Adwaita Mono";
+    font-family: "Font Awesome 7 Free";
 }
 
 #background {
@@ -12,7 +12,7 @@ QPushButton {
     border: 2px solid white;
     border-radius: 5px;
     color: white;
-    font-size: 64px;
+    font-size: 100px;
 }
 
 QPushButton:hover {

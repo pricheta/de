@@ -2,7 +2,7 @@ import subprocess
 from typing import Callable
 
 from PyQt6.QtCore import QObject, Qt
-from PyQt6.QtWidgets import QPushButton, QLabel
+from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
 from common import RAW_CONFIG

@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Type
 
 from PyQt6.QtCore import QFile, QTextStream, Qt
@@ -25,6 +26,7 @@ class WindowConfig(BaseModel):
     WIDTH: int
     HEIGHT: int
     WIDGETS: list[WidgetConfig]
+    CSS_FILE_PATH: Path | None = None
 
 
 class Window(QWidget):
@@ -38,7 +40,9 @@ class Window(QWidget):
         )
 
         self.__build_widgets()
-        self.__apply_stylesheet("/home/pricheta/Programs/pricheta/de/style.css")
+
+        if self.config.CSS_FILE_PATH:
+            self.__apply_stylesheet(str(self.config.CSS_FILE_PATH))
 
     def __build_widgets(self) -> None:
         background = QWidget(self)

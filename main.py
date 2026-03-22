@@ -29,6 +29,7 @@ window_config = {
     "Y": 10,
     "WIDTH": 100,
     "HEIGHT": 100,
+    "CSS_FILE_PATH": "/home/pricheta/Programs/pricheta/de/style.css",
     "WIDGETS": [widget_config],
 }
 

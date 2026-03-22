@@ -5,9 +5,9 @@ from PyQt6.QtCore import QFile, QTextStream, Qt
 from PyQt6.QtWidgets import QWidget, QHBoxLayout
 from pydantic import BaseModel
 
-from common import WidgetName, RAW_CONFIG, logger
-from widgets.base import PrichetaWidget
-from widgets.button_menu import ButtonMenu
+from code.const import WidgetName, RAW_CONFIG, logger
+from code.widgets.base import PrichetaWidget
+from code.widgets.button_menu import ButtonMenu
 
 WIDGET_NAME_TO_TYPE_MAP: dict[str, Type[PrichetaWidget]] = {
     "Button Menu": ButtonMenu,
@@ -42,7 +42,7 @@ class Window(QWidget):
         self.__build_widgets()
 
         if self.config.CSS_FILE_PATH:
-            from main import CONF_PATH
+            from code.main import CONF_PATH
 
             css_file_path = CONF_PATH / self.config.CSS_FILE_PATH
             self.__apply_stylesheet(str(css_file_path))

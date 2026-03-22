@@ -5,10 +5,10 @@ from pathlib import Path
 from PyQt6.QtWidgets import QApplication
 from pydantic import BaseModel
 
-from fifo_reader import FifoReader
-from window import WindowConfig, WindowManager
+from code.fifo_reader import FifoReader
+from code.window import WindowConfig, WindowManager
 
-CURRENT_PATH = Path(os.path.realpath(__file__)).parent
+CURRENT_PATH = Path(os.path.realpath(__file__)).parent.parent
 CONF_PATH = CURRENT_PATH / "conf"
 
 

@@ -5,8 +5,8 @@ from PyQt6.QtCore import QObject, Qt
 from PyQt6.QtWidgets import QPushButton
 from pydantic import BaseModel
 
-from common import RAW_CONFIG
-from widgets.base import PrichetaWidget
+from code.const import RAW_CONFIG
+from code.widgets.base import PrichetaWidget
 
 
 class ButtonConfig(BaseModel):
@@ -34,7 +34,7 @@ class ButtonMenu(PrichetaWidget):
             self.addWidget(button)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:
-        from window import Window
+        from code.window import Window
 
         def button_click_func() -> None:
 

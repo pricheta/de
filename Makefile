@@ -1,6 +1,6 @@
-.PHONY: lint, format, check
+.PHONY: lint, format, check, install
 
-CODE := common.py fifo_reader.py main.py window.py widgets
+CODE := code
 
 lint:
 	mypy $(CODE)
@@ -10,3 +10,6 @@ format:
 	black $(CODE)
 
 check: format lint
+
+install:
+	cp -r * /home/pricheta/.local/bin/pricheta_de/

@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from code.fifo_reader import FifoReader
 from code.window import WindowConfig, WindowManager
 
-CURRENT_PATH = Path(os.path.realpath(__file__)).parent.parent
+CURRENT_PATH = Path(os.path.realpath(__file__)).parent
 CONF_PATH = CURRENT_PATH / "conf"
 
 

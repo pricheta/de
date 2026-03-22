@@ -16,12 +16,20 @@
                         "HIDE_WINDOW_AFTER_CLICK": true,
                         "BUTTONS": [
                             {
+                                "LABEL": "",
+                                "COMMAND": "kitty"
+                            },
+                            {
                                 "LABEL": "",
                                 "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm"
                             },
                             {
                                 "LABEL": "",
                                 "COMMAND": "/usr/bin/firefox"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "libreoffice --calc"
                             }
                         ]
                     }

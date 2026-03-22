@@ -12,4 +12,5 @@ format:
 check: format lint
 
 install:
+	rm -rf /home/pricheta/.local/bin/pricheta_de/*
 	cp -r * /home/pricheta/.local/bin/pricheta_de/

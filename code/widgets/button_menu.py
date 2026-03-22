@@ -1,4 +1,5 @@
 import subprocess
+from math import sqrt, floor, ceil
 from typing import Callable
 
 from PyQt6.QtCore import QObject, Qt
@@ -26,13 +27,22 @@ class ButtonMenu(PrichetaWidget):
         super().__init__()
         self.config = ButtonMenuConfig.model_validate(config)
         self.setSpacing(self.config.SPACING)
+        self.setVerticalSpacing(self.config.SPACING)
 
-        for button_config in self.config.BUTTONS:
+        self.config.BUTTONS = self.config.BUTTONS[:5]
+
+        buttons_amount = len(self.config.BUTTONS)
+        maximum_columns = ceil(sqrt(buttons_amount))
+
+        for index, button_config in enumerate(self.config.BUTTONS):
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             button.setCursor(Qt.CursorShape.PointingHandCursor)
             button.setFixedSize(self.config.BUTTON_SIZE, self.config.BUTTON_SIZE)
-            self.addWidget(button)
+
+            row = index // maximum_columns
+            col = index % maximum_columns
+            self.addWidget(button, row, col)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:
         from code.window import Window

@@ -94,13 +94,6 @@ class WindowManager:
         self,
         window_name: str,
     ):
-        if (
-            self.active_window
-            and self.active_window.isVisible()
-            and self.active_window.config.TITLE == window_name
-        ):
-            return
-
         config = self.window_configs.get(window_name)
 
         if not config:

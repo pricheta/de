@@ -38,7 +38,6 @@ class ButtonMenu(PrichetaWidget):
         from code.window import Window
 
         def button_click_func() -> None:
-
             subprocess.Popen(
                 command,
                 shell=True,

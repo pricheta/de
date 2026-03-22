@@ -38,23 +38,30 @@ class Window(QWidget):
         )
 
         self.__build_widgets()
-        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.__apply_stylesheet("/home/pricheta/Programs/pricheta/de/style.css")
 
     def __build_widgets(self) -> None:
-        main_layout = QHBoxLayout()
-        self.setLayout(main_layout)
+        background = QWidget(self)
+        background.setObjectName("background")
+        background_layout = QHBoxLayout(background)
 
         for widget_config in self.config.WIDGETS:
             widget_type = WIDGET_NAME_TO_TYPE_MAP[widget_config.NAME]
             widget = widget_type(widget_config.CONFIG)
-            main_layout.addLayout(widget)
+            background_layout.addLayout(widget)
+
+        root_layout = QHBoxLayout()
+        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.addWidget(background)
+        self.setLayout(root_layout)
 
     def closeEvent(self, event):
         self.hide()
         event.ignore()
 
     def __apply_stylesheet(self, file_name: str) -> None:
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+
         file = QFile(file_name)
         if not file.exists():
             logger.error(f"Style sheet file '{file_name}' does not exist!")

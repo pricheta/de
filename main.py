@@ -7,6 +7,7 @@ from window import WindowConfig, WindowManager
 widget_config = {
     "NAME": "Button Menu",
     "CONFIG": {
+        "BUTTON_SIZE": 128,
         "HIDE_WINDOW_AFTER_CLICK": True,
         "BUTTONS": [
             {
@@ -23,7 +24,7 @@ widget_config = {
 
 
 window_config = {
-    "TITLE": "test",
+    "TITLE": "pricheta_de",
     "X": 10,
     "Y": 10,
     "WIDTH": 100,

@@ -2,7 +2,7 @@ import subprocess
 from typing import Callable
 
 from PyQt6.QtCore import QObject, Qt
-from PyQt6.QtWidgets import QPushButton
+from PyQt6.QtWidgets import QPushButton, QLabel
 from pydantic import BaseModel
 
 from common import RAW_CONFIG
@@ -17,6 +17,7 @@ class ButtonConfig(BaseModel):
 class ButtonMenuConfig(BaseModel):
     BUTTONS: list[ButtonConfig]
     HIDE_WINDOW_AFTER_CLICK: bool
+    BUTTON_SIZE: int
 
 
 class ButtonMenu(PrichetaWidget):
@@ -29,7 +30,7 @@ class ButtonMenu(PrichetaWidget):
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             button.setCursor(Qt.CursorShape.PointingHandCursor)
-            button.setFixedSize(128, 128)
+            button.setFixedSize(self.config.BUTTON_SIZE, self.config.BUTTON_SIZE)
             self.addWidget(button)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:

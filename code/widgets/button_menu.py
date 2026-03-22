@@ -29,8 +29,6 @@ class ButtonMenu(PrichetaWidget):
         self.setSpacing(self.config.SPACING)
         self.setVerticalSpacing(self.config.SPACING)
 
-        self.config.BUTTONS = self.config.BUTTONS[:5]
-
         buttons_amount = len(self.config.BUTTONS)
         maximum_columns = ceil(sqrt(buttons_amount))
 

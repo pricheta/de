@@ -48,16 +48,18 @@ class Window(QWidget):
             self.__apply_stylesheet(str(css_file_path))
 
     def __build_widgets(self) -> None:
-        root_layout = QHBoxLayout()
-        root_layout.setObjectName("background")
-        root_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        background = QWidget(self)
+        background.setObjectName("background")
+        background.setFixedSize(self.width(), self.height())
+        background_layout = QHBoxLayout(background)
+        background_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         for widget_config in self.config.WIDGETS:
             widget_type = WIDGET_NAME_TO_TYPE_MAP[widget_config.NAME]
             widget = widget_type(widget_config.CONFIG)
-            root_layout.addLayout(widget)
+            background_layout.addLayout(widget)
 
-        self.setLayout(root_layout)
+        self.setLayout(background_layout)
 
     def closeEvent(self, event):
         self.hide()

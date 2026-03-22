@@ -20,6 +20,10 @@
                                 "COMMAND": "kitty"
                             },
                             {
+                                "LABEL": "",
+                                "COMMAND": "kitty ranger ~"
+                            },
+                            {
                                 "LABEL": "",
                                 "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm"
                             },
@@ -30,6 +34,10 @@
                             {
                                 "LABEL": "",
                                 "COMMAND": "libreoffice --calc"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "discord"
                             }
                         ]
                     }

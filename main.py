@@ -4,43 +4,47 @@ from pydantic import BaseModel
 from fifo_reader import FifoReader
 from window import WindowConfig, WindowManager
 
-widget_config = {
-    "NAME": "Button Menu",
-    "CONFIG": {
-        "BUTTON_SIZE": 128,
-        "HIDE_WINDOW_AFTER_CLICK": True,
-        "BUTTONS": [
-            {
-                "LABEL": "",
-                "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm",
-            },
-            {
-                "LABEL": "",
-                "COMMAND": "/usr/bin/firefox",
-            },
-        ],
-    },
+
+app_config = {
+    "FIFO_PATH": "/tmp/pricheta_de",
+    "WINDOWS": [
+        {
+            "TITLE": "pricheta_launcher",
+            "X": 0,
+            "Y": 0,
+            "WIDTH": 1920,
+            "HEIGHT": 1080,
+            "CSS_FILE_PATH": "/home/pricheta/.config/pricheta_de/launcher/style.css",
+            "WIDGETS": [
+                {
+                    "NAME": "Button Menu",
+                    "CONFIG": {
+                        "BUTTON_SIZE": 128,
+                        "HIDE_WINDOW_AFTER_CLICK": True,
+                        "BUTTONS": [
+                            {
+                                "LABEL": "",
+                                "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm",
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "/usr/bin/firefox",
+                            },
+                        ],
+                    },
+                }
+            ],
+        },
+    ]
 }
-
-
-window_config = {
-    "TITLE": "pricheta_de",
-    "X": 10,
-    "Y": 10,
-    "WIDTH": 100,
-    "HEIGHT": 100,
-    "CSS_FILE_PATH": "/home/pricheta/Programs/pricheta/de/style.css",
-    "WIDGETS": [widget_config],
-}
-
-
-app_config = {"FIFO_PATH": "/tmp/my_fifo", "WINDOWS": [window_config]}
 
 
 class AppConfig(BaseModel):
     WINDOWS: list[WindowConfig]
     FIFO_PATH: str
 
+
+CONFIG_PATH = '/home/pricheta/.config/pricheta_de/pricheta_de.conf'
 
 if __name__ == "__main__":
     config = AppConfig.model_validate(app_config)

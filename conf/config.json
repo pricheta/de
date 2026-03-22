@@ -13,6 +13,7 @@
                     "NAME": "Button Menu",
                     "CONFIG": {
                         "BUTTON_SIZE": 128,
+                        "SPACING": 20,
                         "HIDE_WINDOW_AFTER_CLICK": true,
                         "BUTTONS": [
                             {
@@ -56,6 +57,7 @@
                     "NAME": "Button Menu",
                     "CONFIG": {
                         "BUTTON_SIZE": 512,
+                        "SPACING": 80,
                         "HIDE_WINDOW_AFTER_CLICK": true,
                         "BUTTONS": [
                             {

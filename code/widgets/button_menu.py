@@ -18,13 +18,14 @@ class ButtonMenuConfig(BaseModel):
     BUTTONS: list[ButtonConfig]
     HIDE_WINDOW_AFTER_CLICK: bool
     BUTTON_SIZE: int
+    SPACING: int
 
 
 class ButtonMenu(PrichetaWidget):
     def __init__(self, config: RAW_CONFIG) -> None:
         super().__init__()
         self.config = ButtonMenuConfig.model_validate(config)
-        self.setSpacing(20)
+        self.setSpacing(self.config.SPACING)
 
         for button_config in self.config.BUTTONS:
             button = QPushButton(button_config.LABEL)

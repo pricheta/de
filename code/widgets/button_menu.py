@@ -1,4 +1,5 @@
 import subprocess
+from math import sqrt
 from typing import Callable
 
 from PyQt6.QtCore import QObject, Qt
@@ -19,7 +20,6 @@ class ButtonMenuConfig(BaseModel):
     HIDE_WINDOW_AFTER_CLICK: bool
     BUTTON_SIZE: int
     SPACING: int
-    MAX_COLUMNS: int
 
 
 class ButtonMenu(PrichetaWidget):
@@ -28,14 +28,17 @@ class ButtonMenu(PrichetaWidget):
         self.config = ButtonMenuConfig.model_validate(config)
         self.setSpacing(self.config.SPACING)
 
+        buttons_amount = len(self.config.BUTTONS)
+        max_columns = int(sqrt(buttons_amount)) + 1
+
         for index, button_config in enumerate(self.config.BUTTONS):
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             button.setCursor(Qt.CursorShape.PointingHandCursor)
             button.setFixedSize(self.config.BUTTON_SIZE, self.config.BUTTON_SIZE)
 
-            button_row = index // self.config.MAX_COLUMNS
-            button_col = index % self.config.MAX_COLUMNS
+            button_row = index // max_columns
+            button_col = index % max_columns
 
             self.addWidget(button, button_row, button_col)
 

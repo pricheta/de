@@ -13,7 +13,7 @@ QPushButton {
     border: 2px solid white;
     border-radius: 5px;
     color: white;
-    font-size: 256px;
+    font-size: 128px;
 }
 
 QPushButton:hover {

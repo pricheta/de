@@ -56,8 +56,8 @@
                 {
                     "NAME": "Button Menu",
                     "CONFIG": {
-                        "BUTTON_SIZE": 512,
-                        "SPACING": 80,
+                        "BUTTON_SIZE": 256,
+                        "SPACING": 40,
                         "HIDE_WINDOW_AFTER_CLICK": true,
                         "BUTTONS": [
                             {

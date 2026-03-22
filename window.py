@@ -42,7 +42,10 @@ class Window(QWidget):
         self.__build_widgets()
 
         if self.config.CSS_FILE_PATH:
-            self.__apply_stylesheet(str(self.config.CSS_FILE_PATH))
+            from main import CONF_PATH
+
+            css_file_path = CONF_PATH / self.config.CSS_FILE_PATH
+            self.__apply_stylesheet(str(css_file_path))
 
     def __build_widgets(self) -> None:
         background = QWidget(self)

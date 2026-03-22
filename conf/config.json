@@ -1,0 +1,32 @@
+{
+    "FIFO_PATH": "/tmp/pricheta_de",
+    "WINDOWS": [
+        {
+            "TITLE": "pricheta_launcher",
+            "X": 0,
+            "Y": 0,
+            "WIDTH": 1920,
+            "HEIGHT": 1080,
+            "CSS_FILE_PATH": "launcher/style.css",
+            "WIDGETS": [
+                {
+                    "NAME": "Button Menu",
+                    "CONFIG": {
+                        "BUTTON_SIZE": 128,
+                        "HIDE_WINDOW_AFTER_CLICK": true,
+                        "BUTTONS": [
+                            {
+                                "LABEL": "",
+                                "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "/usr/bin/firefox"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

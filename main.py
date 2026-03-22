@@ -1,42 +1,15 @@
+import json
+import os
+from pathlib import Path
+
 from PyQt6.QtWidgets import QApplication
 from pydantic import BaseModel
 
 from fifo_reader import FifoReader
 from window import WindowConfig, WindowManager
 
-
-app_config = {
-    "FIFO_PATH": "/tmp/pricheta_de",
-    "WINDOWS": [
-        {
-            "TITLE": "pricheta_launcher",
-            "X": 0,
-            "Y": 0,
-            "WIDTH": 1920,
-            "HEIGHT": 1080,
-            "CSS_FILE_PATH": "/home/pricheta/.config/pricheta_de/launcher/style.css",
-            "WIDGETS": [
-                {
-                    "NAME": "Button Menu",
-                    "CONFIG": {
-                        "BUTTON_SIZE": 128,
-                        "HIDE_WINDOW_AFTER_CLICK": True,
-                        "BUTTONS": [
-                            {
-                                "LABEL": "",
-                                "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm",
-                            },
-                            {
-                                "LABEL": "",
-                                "COMMAND": "/usr/bin/firefox",
-                            },
-                        ],
-                    },
-                }
-            ],
-        },
-    ]
-}
+CURRENT_PATH = Path(os.path.realpath(__file__)).parent
+CONF_PATH = CURRENT_PATH / "conf"
 
 
 class AppConfig(BaseModel):
@@ -44,10 +17,11 @@ class AppConfig(BaseModel):
     FIFO_PATH: str
 
 
-CONFIG_PATH = '/home/pricheta/.config/pricheta_de/pricheta_de.conf'
-
 if __name__ == "__main__":
-    config = AppConfig.model_validate(app_config)
+    with open(CONF_PATH / "config.json", "r", encoding="utf-8") as file:
+        json_config = json.load(file)
+
+    config = AppConfig.model_validate(json_config)
     windows_configs = {
         window_config.TITLE: window_config for window_config in config.WINDOWS
     }

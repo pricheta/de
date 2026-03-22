@@ -19,6 +19,7 @@ class ButtonMenuConfig(BaseModel):
     HIDE_WINDOW_AFTER_CLICK: bool
     BUTTON_SIZE: int
     SPACING: int
+    MAX_COLUMNS: int
 
 
 class ButtonMenu(PrichetaWidget):
@@ -27,12 +28,16 @@ class ButtonMenu(PrichetaWidget):
         self.config = ButtonMenuConfig.model_validate(config)
         self.setSpacing(self.config.SPACING)
 
-        for button_config in self.config.BUTTONS:
+        for index, button_config in enumerate(self.config.BUTTONS):
             button = QPushButton(button_config.LABEL)
             button.clicked.connect(self.__get_button_click_func(button_config.COMMAND))
             button.setCursor(Qt.CursorShape.PointingHandCursor)
             button.setFixedSize(self.config.BUTTON_SIZE, self.config.BUTTON_SIZE)
-            self.addWidget(button)
+
+            button_row = index // self.config.MAX_COLUMNS
+            button_col = index % self.config.MAX_COLUMNS
+
+            self.addWidget(button, button_row, button_col)
 
     def __get_button_click_func(self, command: str) -> Callable[[], None]:
         from code.window import Window

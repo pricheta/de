@@ -43,6 +43,10 @@
                             {
                                 "LABEL": "",
                                 "COMMAND": "steam"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "obsidian"
                             }
                         ]
                     }

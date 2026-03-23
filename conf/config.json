@@ -47,6 +47,10 @@
                             {
                                 "LABEL": "",
                                 "COMMAND": "obsidian"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "/home/pricheta/Programs/NoiseTorch/bin/noisetorch"
                             }
                         ]
                     }

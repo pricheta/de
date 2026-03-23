@@ -29,8 +29,8 @@
                                 "COMMAND": "/home/pricheta/Programs/pycharm/bin/pycharm"
                             },
                             {
-                                "LABEL": "",
-                                "COMMAND": "/usr/bin/firefox"
+                                "LABEL": "",
+                                "COMMAND": "chromium"
                             },
                             {
                                 "LABEL": "",

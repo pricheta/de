@@ -84,6 +84,41 @@
                     }
                 }
             ]
+        },
+        {
+            "TITLE": "pricheta_pipewire",
+            "X": 0,
+            "Y": 0,
+            "WIDTH": 400,
+            "HEIGHT": 300,
+            "CSS_FILE_PATH": "pipewire/style.css",
+            "WIDGETS": [
+                {
+                    "NAME": "Slider",
+                    "CONFIG": {
+                        "STEP": 5,
+                        "SINK": "@DEFAULT_AUDIO_SINK@"
+                    }
+                },
+                {
+                    "NAME": "Button Menu",
+                    "CONFIG": {
+                        "BUTTON_SIZE": 128,
+                        "SPACING": 20,
+                        "HIDE_WINDOW_AFTER_CLICK": false,
+                        "BUTTONS": [
+                            {
+                                "LABEL": "🔊",
+                                "COMMAND": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+                            },
+                            {
+                                "LABEL": "",
+                                "COMMAND": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+                            }
+                        ]
+                    }
+                }
+            ]
         }
     ]
 }

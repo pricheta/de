@@ -9,3 +9,4 @@ type RAW_CONFIG = dict[str, Any]
 
 class WidgetName(StrEnum):
     BUTTON_MENU = "Button Menu"
+    SLIDER = "Slider"

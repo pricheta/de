@@ -8,9 +8,11 @@ from pydantic import BaseModel
 from code.const import WidgetName, RAW_CONFIG, logger
 from code.widgets.base import PrichetaWidget
 from code.widgets.button_menu import ButtonMenu
+from code.widgets.slider import Slider
 
 WIDGET_NAME_TO_TYPE_MAP: dict[str, Type[PrichetaWidget]] = {
-    "Button Menu": ButtonMenu,
+    WidgetName.BUTTON_MENU: ButtonMenu,
+    WidgetName.SLIDER: Slider,
 }
 
 

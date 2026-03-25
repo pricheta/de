@@ -49,6 +49,10 @@
                                 "COMMAND": "obsidian"
                             },
                             {
+                                "LABEL": "",
+                                "COMMAND": "pavucontrol"
+                            },
+                            {
                                 "LABEL": "",
                                 "COMMAND": "/home/pricheta/Programs/NoiseTorch/bin/noisetorch"
                             }
